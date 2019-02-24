@@ -11,7 +11,11 @@ const runner = require("./test-runner");
 
 const app = express();
 
-app.use(helmet());
+app.use(helmet({
+  referrerPolicy: {
+    policy: "no-referrer"
+  }
+}));
 
 app.use("/public", express.static(process.cwd() + "/public"));
 
@@ -45,9 +49,6 @@ fccTestingRoutes(app);
 
 //Routing for API 
 apiRoutes(app);
-
-//Sample Front-end
-
 
 //404 Not Found Middleware
 app.use((req, res, next) => {
