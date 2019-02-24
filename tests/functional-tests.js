@@ -84,6 +84,22 @@ suite("Functional Tests", () => {
     //     suite("UPDATE", () => {});
 
     suite("DELETE", () => {
+      test("Delete thread test - incorrect password", (done) => {
+        chai.request(server)
+          .delete("/api/threads/test")
+          .send({
+            _id: deleteTestDocumentsIds.docOne,
+            password: "DELETE"
+          })
+          .end(async (err, res) => {
+            assert.equal(res.status, 400);
+            assert.equal(res.type, "text/html");
+            assert.equal(res.text, "wrong password");
+
+            done();
+          })
+      });
+
       test("Delete thread test", (done) => {
         chai.request(server)
           .delete("/api/threads/test")

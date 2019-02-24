@@ -51,11 +51,21 @@ module.exports = (app) => {
       try {
         const board = req.params.board;
         const input = req.body;
-        
-        let test = await Message.deleteOne({ _id: input._id, board_name: board, delete_password: input.password });
-        if (test === null) throw new Error("input invalid");
-        
-        res.send("success")
+
+        let getBoard = await Message.findOne({
+          _id: input._id,
+          board_name: board
+        });
+        if (getBoard.delete_password !== input.password) {
+          res.status(400).send("wrong password");
+        } else {
+          await Message.deleteOne({
+            _id: input._id,
+            board_name: board,
+            delete_password: input.password
+          });
+          res.send("success");
+        }
       } catch (e) {
         console.error(e.message);
         res.status(400).send("something went wrong...");
