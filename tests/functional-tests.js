@@ -15,7 +15,106 @@ suite("Functional Tests", () => {
   });
 
   const testDocument1 = {
-    board_name: test,
+    board_name: "test",
+    text: "test text",
+    created_on: new Date().toISOString(),
+    bumped_on: new Date().toISOString(),
+    reported: false,
+    delete_password: "delete",
+    replies: []
+  }
+  const testDocument2 = {
+    board_name: "test",
+    text: "test text",
+    created_on: new Date().toISOString(),
+    bumped_on: new Date().toISOString(),
+    reported: false,
+    delete_password: "delete",
+    replies: []
+  }
+  const testDocument3 = {
+    board_name: "test",
+    text: "test text",
+    created_on: new Date().toISOString(),
+    bumped_on: new Date().toISOString(),
+    reported: false,
+    delete_password: "delete",
+    replies: []
+  }
+  const testDocument4 = {
+    board_name: "test",
+    text: "test text",
+    created_on: new Date().toISOString(),
+    bumped_on: new Date().toISOString(),
+    reported: false,
+    delete_password: "delete",
+    replies: []
+  }
+  const testDocument5 = {
+    board_name: "test",
+    text: "test text",
+    created_on: new Date().toISOString(),
+    bumped_on: new Date().toISOString(),
+    reported: false,
+    delete_password: "delete",
+    replies: []
+  }
+  const testDocument6 = {
+    board_name: "test",
+    text: "test text",
+    created_on: new Date().toISOString(),
+    bumped_on: new Date().toISOString(),
+    reported: false,
+    delete_password: "delete",
+    replies: []
+  }
+  const testDocument7 = {
+    board_name: "test",
+    text: "test text",
+    created_on: new Date().toISOString(),
+    bumped_on: new Date().toISOString(),
+    reported: false,
+    delete_password: "delete",
+    replies: []
+  }
+  const testDocument8 = {
+    board_name: "test",
+    text: "test text",
+    created_on: new Date().toISOString(),
+    bumped_on: new Date().toISOString(),
+    reported: false,
+    delete_password: "delete",
+    replies: []
+  }
+  const testDocument9 = {
+    board_name: "test",
+    text: "test text",
+    created_on: new Date().toISOString(),
+    bumped_on: new Date().toISOString(),
+    reported: false,
+    delete_password: "delete",
+    replies: []
+  }
+  const testDocument10 = {
+    board_name: "test",
+    text: "test text",
+    created_on: new Date().toISOString(),
+    bumped_on: new Date().toISOString(),
+    reported: false,
+    delete_password: "delete",
+    replies: []
+  }
+  const testDocument11 = {
+    board_name: "test",
+    text: "test text",
+    created_on: new Date().toISOString(),
+    bumped_on: new Date().toISOString(),
+    reported: false,
+    delete_password: "delete",
+    replies: []
+  }
+  const testDocument12 = {
+    board_name: "test",
     text: "test text",
     created_on: new Date().toISOString(),
     bumped_on: new Date().toISOString(),
@@ -24,7 +123,7 @@ suite("Functional Tests", () => {
     replies: []
   }
 
-  const listOfTestDocuments = [testDocument1];
+  const listOfTestDocuments = [testDocument1, testDocument2, testDocument3, testDocument4, testDocument5, testDocument6, testDocument7, testDocument8, testDocument9, testDocument10, testDocument11, testDocument12];
   let testDocumentsIds;
   let deleteTestDocumentsIds = {};
 
@@ -79,9 +178,37 @@ suite("Functional Tests", () => {
       });
     });
 
-    //     suite("READ", () => {});
+    suite("READ", () => {
+      test("Get thread test messeages", (done) => {
+        chai.request(server)
+          .get("/api/threads/test")
+          .end((err, res) => {
+            assert.equal(res.status, 200);
+            assert.equal(res.type, "application/json");
+            assert.isArray(res.body);
+            assert.isAtMost(res.body.length, 10);
 
-    //     suite("UPDATE", () => {});
+            done();
+          });
+      });
+    });
+
+    suite("UPDATE", () => {
+      test("UPDATE thread reported to true", (done) => {
+        chai.request(server)
+          .put("/api/threads/test")
+          .send({
+            id: deleteTestDocumentsIds.docOne
+          })
+          .end((err, res) => {
+            assert.equal(res.status, 200);
+            assert.equal(res.type, "text/html");
+            assert.equal(res.text, "success");
+
+            done();
+          })
+      });
+    });
 
     suite("DELETE", () => {
       test("Delete thread test - incorrect password", (done) => {
@@ -113,7 +240,7 @@ suite("Functional Tests", () => {
             assert.equal(res.text, "success");
 
             const checkForBoard = await client.db(dbName).collection(collectionName).findOne({
-              board_name: "test"
+              _id: deleteTestDocumentsIds.docOne
             });
             assert.equal(checkForBoard, null);
 
@@ -122,13 +249,94 @@ suite("Functional Tests", () => {
       });
     });
 
-    //   suite("API ROUTING FOR /api/replies/:board", () => {
-    //     suite("CREATE", () => {});
+    suite("API ROUTING FOR /api/replies/:board", () => {
+      suite("CREATE", () => {
+        test("Add response to a thread", (done) => {
+          chai.request(server)
+            .post("/api/replies/test")
+            .send({
+              id: listOfTestDocuments[0]._id,
+              text: "new thread text",
+              password: "delete"
+            })
+            .end(async (err, res) => {
+              assert.equal(res.status, 200);
+              assert.equal(res.type, "text/html");
+              assert.equal(res.text, "success");
 
-    //     suite("READ", () => {});
+              const checkChange = await client.db(dbName).collection(collectionName).findOne({
+                _id: listOfTestDocuments[0]._id
+              });
+              assert.isArray(checkChange.replies);
+              assert.equal(checkChange.replies.length, 1);
 
-    //     suite("UPDATE", () => {});
+              done();
+            });
+        });
+      });
 
-    //     suite("DELETE", () => {});
+      suite("READ", () => {
+        test("Add response to a thread", (done) => {
+          chai.request(server)
+            .get("/api/replies/test")
+            .query({
+              thread_id: listOfTestDocuments[0]._id.toString()
+            })
+            .end((err, res) => {
+              assert.equal(res.status, 200);
+              assert.equal(res.type, "application/json");
+              assert.isArray(res.body);
+              assert.equal(res.body.length, 1);
+              done();
+            })
+        });
+      });
+
+      suite("UPDATE", () => {
+        test("Update replie text ", (done) => {
+          chai.request(server)
+            .put("/api/replies/test")
+            .send({
+              thread_id: listOfTestDocuments[0]._id,
+              text: "updated"
+            })
+            .end(async (err, res) => {
+              assert.equal(res.status, 200);
+              assert.equal(res.type, "text/html");
+              assert.equal(res.text, "success");
+
+              const checkChange = await client.db(dbName).collection(collectionName).findOne({
+                _id: listOfTestDocuments[0]._id
+              });
+              assert.equal(checkChange.replies[0].text, "updated");
+
+              done();
+            });
+        });
+      });
+
+      suite("DELETE", () => {
+        test("Delete replie", (done) => {
+          chai.request(server)
+            .delete("/api/replies/test")
+            .send({
+              thread_id: listOfTestDocuments[0]._id,
+              password: "delete"
+            })
+            .end(async (err, res) => {
+              assert.equal(res.status, 200);
+              assert.equal(res.type, "text/html");
+              assert.equal(res.text, "success");
+
+              const checkChange = await client.db(dbName).collection(collectionName).findOne({
+                _id: listOfTestDocuments[0]._id
+              });
+              assert.equal(checkChange, null);
+
+              done();
+            });
+        });
+      });
+    });
   });
 });
