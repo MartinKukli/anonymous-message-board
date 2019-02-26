@@ -4,7 +4,18 @@
 }
 
 body {
+  margin-left: 5%;
+  margin-right: 5%;
   padding: 10px;
+  
+}
+
+h1 {
+  text-align: center;
+}
+
+hr {
+  margin-top: 5%;
 }
 
 .replies {
@@ -29,6 +40,15 @@ body {
 
 .id {
   font-size: 10.5px;
+}
+
+#userstories {
+  margin-top: 5%;
+}
+
+#sectionThreads, #sectionReplies {
+  display: flex;
+  justify-content: space-around;
 }
 
 #submitNewThread {

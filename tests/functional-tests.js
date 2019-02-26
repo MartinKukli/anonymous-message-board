@@ -287,6 +287,7 @@ suite("Functional Tests", () => {
               assert.equal(res.type, "application/json");
               assert.isArray(res.body);
               assert.equal(res.body.length, 1);
+            
               done();
             })
         });

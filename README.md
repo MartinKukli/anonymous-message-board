@@ -1,0 +1,1 @@
+To run test add NODE_ENV=test to .env
