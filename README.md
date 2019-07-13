@@ -1,2 +1,1 @@
-# anonymous-message-board
-FreeCodeCamp - Information Security and Quality Assurance Projects - Anonymous Message Board
+Task: Build a full stack JavaScript app that is functionally similar to this: https://horn-celery.glitch.me

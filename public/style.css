@@ -1,0 +1,77 @@
+a {
+  color: #e81c4f;
+}
+
+body {
+  font-family: "Helvetica", "Arial", sans-serif;
+  margin: 0 auto;
+  max-width: 50em;
+  line-height: 1.5;
+  padding: 4em 1em;
+}
+
+code {
+  padding: 2px 4px;
+  vertical-align: text-bottom;
+}
+
+h2 {
+  margin-top: 1em;
+  padding-top: 1em;
+}
+
+pre {
+  padding: 1em;
+  border-left: 2px solid #69c;
+}
+
+h1,
+h2,
+strong {
+  color: #333;
+}
+
+code,
+pre {
+  background: #f5f7f9;
+  border-bottom: 1px solid #d8dee9;
+  color: #a7adba;
+}
+
+
+.replies {
+  margin-left: 50px;
+}
+
+.reply {
+  border: 1px dotted black;
+  margin: 5px;
+  padding: 5px;
+}
+
+.newReply {
+  margin: 10px 5px 10px 5px;
+}
+
+.thread {
+  border: 2px solid black;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.id {
+  font-size: 10.5px;
+}
+
+#userstories {
+  margin-top: 5%;
+}
+
+#sectionThreads, #sectionReplies {
+  display: flex;
+  justify-content: space-around;
+}
+
+#submitNewThread {
+  margin: 50px;
+}
