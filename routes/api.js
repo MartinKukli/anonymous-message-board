@@ -43,12 +43,9 @@ module.exports = (app) => {
         console.error(e.message);
         res.status(400).send("something went wrong...");
       }
-    })
-
-    .get(async (req, res) => {
+    }).get(async (req, res) => {
       try {
         const board = req.params.board;
-        const repliesLimit = -3;
         const queryResultLimit = 10;
         const queryResultParams = "_id board_name text created_on bumped_on replies";
 
@@ -61,14 +58,12 @@ module.exports = (app) => {
         console.error(e.message);
         res.state(400).send("something went wrong...");
       }
-    })
-
-    .put(async (req, res) => {
+    }).put(async (req, res) => {
       try {
         const board = req.params.board;
         const id = req.body.id;
 
-        let queryResult = await Message.updateOne({
+        await Message.updateOne({
           _id: id,
           board_name: board
         }, {
@@ -80,9 +75,7 @@ module.exports = (app) => {
         console.error(e.message);
         res.status(400).send("something went wrong...");
       }
-    })
-
-    .delete(async (req, res) => {
+    }).delete(async (req, res) => {
       try {
         const board = req.params.board;
         const input = req.body;
@@ -91,7 +84,9 @@ module.exports = (app) => {
           _id: input._id,
           board_name: board
         });
-        if (getBoard.delete_password !== input.password) {
+
+        const isPasswordSame = getBoard.delete_password !== input.password;
+        if (isPasswordSame) {
           res.status(400).send("wrong password");
         } else {
           await Message.deleteOne({
@@ -110,9 +105,7 @@ module.exports = (app) => {
   app.route("/api/replies/:board")
     .post(async (req, res) => {
       try {
-        const board = req.params.board;
         const input = req.body;
-
         await Message.updateOne({
           _id: input.id
         }, {
@@ -126,15 +119,12 @@ module.exports = (app) => {
             }
           }
         });
-
         res.send("success");
       } catch (e) {
         console.error(e.message);
         res.status(400).send("something went wrong...");
       }
-    })
-
-    .get(async (req, res) => {
+    }).get(async (req, res) => {
       try {
         const id = req.query.thread_id;
         const queryResult = await Message.findById(id, "replies");
@@ -143,33 +133,26 @@ module.exports = (app) => {
         console.error(e.message);
         res.status(400).send("something went wrong...");
       }
-    })
-
-    .put(async (req, res) => {
+    }).put(async (req, res) => {
       try {
         const id = req.body.thread_id;
         const text = req.body.text;
-
         await Message.findByIdAndUpdate(id, {
           "replies.0": {
             text: text
           }
         });
-
         res.send("success");
       } catch (e) {
         console.error(e.message);
         res.status(400).send("something went wrong...");
       }
-    })
-
-    .delete(async (req, res) => {
+    }).delete(async (req, res) => {
       try {
         const id = req.body.thread_id;
         const input = req.body;
 
         let queryById = await Message.findById(id, "delete_password replies");
-
         if (queryById.delete_password !== input.password) {
           res.status(400).send("wrong password");
         } else {

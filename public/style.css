@@ -3,7 +3,7 @@ a {
 }
 
 body {
-  font-family: "Helvetica", "Arial", sans-serif;
+  font-family: 'Helvetica', 'Arial', sans-serif;
   margin: 0 auto;
   max-width: 50em;
   line-height: 1.5;
@@ -38,7 +38,6 @@ pre {
   color: #a7adba;
 }
 
-
 .replies {
   margin-left: 50px;
 }
@@ -67,7 +66,8 @@ pre {
   margin-top: 5%;
 }
 
-#sectionThreads, #sectionReplies {
+#sectionThreads,
+#sectionReplies {
   display: flex;
   justify-content: space-around;
 }
